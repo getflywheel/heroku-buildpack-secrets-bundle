@@ -1,3 +1,5 @@
+**This branch is for cedar-14 and heroku-16 applications only.**
+
 Secrets don't belong in your repository, but sometimes they are too large or unwieldy for envornment variables.  This provides a simple way to securely drop a bundle of files into your Heroku application on deploy.
 
 __This is experimental, and not 12-Factor compliant__
