@@ -7,7 +7,7 @@ __This is experimental, and not 12-Factor compliant__
 1. Tar-Gzip your secrets
   * `cd secrets/ && tar -c * | gzip > ../secrets.tar.gz`
 1. Encrypt with OpenSSL AES-256-CBC
-  * `openssl enc -aes-256-cbc -salt -in secrets.tar.gz -out secrets.tar.gz.enc`
+  * `openssl enc -aes-256-cbc -md sha256 -salt -in secrets.tar.gz -out secrets.tar.gz.enc`
 1. Host it somewhere (Dropbox public folder is an easy option)
 1. Set `SECRET_BUNDLE_URL` and `SECRET_BUNDLE_PASSPHRASE` accordingly
 1. Add the buildpack to your Heroku app
@@ -20,3 +20,7 @@ __This is experimental, and not 12-Factor compliant__
 After you deploy once with a secrets bundle, you can clear `SECRET_BUNDLE_URL` and `SECRET_BUNDLE_PASSPHRASE` and it will still load the secrets from cache.  If you want to replace the cache, just set them again and it will overwrite.
 
 If you want to completely flush your cache, set `SECRET_BUNDLE_URL` to `DELETE` and run a deploy.
+
+# OpenSSL Note
+
+The [heroku-18 stack](https://devcenter.heroku.com/articles/stack-packages) uses OpenSSL 1.1.0, which is incompatible with previous encryption versions.  If you are on an older stack (cedar-14, heroku-16) please use the `legacy` branch.
